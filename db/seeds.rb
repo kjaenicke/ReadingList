@@ -1,9 +1,9 @@
 Book.destroy_all
-# Genre.destroy_all
+Genre.destroy_all
 
-# fiction = Genre.create!(name: 'Fiction')
-# apple = Genre.create!(name: 'Apple')
-# non_fiction = Genre.create!(name: 'Non-Fiction')
+fiction = Genre.create!(name: 'Fiction')
+apple = Genre.create!(name: 'Apple')
+non_fiction = Genre.create!(name: 'Non-Fiction')
 
 Book.create!([{
   title: "Hyperion",
@@ -12,7 +12,7 @@ Book.create!([{
   amazon_id: "0553283685",
   rating: 5,
   finished_on: 10.days.ago,
-  # genres: [fiction]
+  genres: [fiction]
 },
 {
   title: "Jony Ive: The Genius Behind Apple's Greatest Products",
@@ -21,7 +21,7 @@ Book.create!([{
   amazon_id: "159184617X",
   rating: 4,
   finished_on: 1.day.ago,
-  # genres: [non_fiction, apple]
+  genres: [non_fiction, apple]
 },
 {
   title: "Mindstorms",
@@ -30,7 +30,7 @@ Book.create!([{
   amazon_id: "0465046746",
   rating: 1,
   finished_on: nil,
-  # genres: [non_fiction]
+  genres: [non_fiction]
 }])
 
 p "Created #{Book.count} books"
