@@ -2,19 +2,27 @@ class Book < ActiveRecord::Base
   has_many :book_genres
   has_many :genres, through: :book_genres
 
-  scope :finished, -> { where.not(finished_on: nil) }
-  scope :recent, -> { where('finished_on > ?', 2.days.ago) }
-  scope :search, ->(keyword) { where(title: keyword) if keyword.present?  }
+  scope :finished, -> {
+    where.not(finished_on: nil)
+  }
+  scope :recent, -> {
+    where('finished_on > ?', 2.days.ago)
+  }
+  scope :search, -> (keyword) {
+    where('keywords LIKE ?', "%#{keyword.downcase}%") if keyword.present?
+  }
+  scope :filter, -> (genreName) {
+    joins(:genres).where('genres.name = ?', genreName) if name.present?
+  }
 
-  # def self.search(keyword)
-  #   if keyword.present?
-  #     where(title: keyword)
-  #   else
-  #     all
-  #   end
-  # end
+  before_save :set_keywords
 
   def finished?
     finished_on.present?
   end
+
+  protected
+    def set_keywords
+      self.keywords = [title, author, description].map(&:downcase).join(' ')
+    end
 end
